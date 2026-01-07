@@ -143,14 +143,8 @@ All figures for manuscript and supplement
 │   ├── model_output
 │   └── models
 ├── README.md
-├── reports
-│   ├── conference_abstract
-│   ├── presentation
-│   ├── project_initiation
-│   └── words
 ├── tables
 │   └── table1
-└── temperature_violence_medicaid_2022.Rproj
 ```
 
 ## Data Availability
