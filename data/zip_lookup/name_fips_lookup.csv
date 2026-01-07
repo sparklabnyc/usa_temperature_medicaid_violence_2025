@@ -1,0 +1,52 @@
+full_name,fips,code_name,climate_region
+Alabama,1,AL,Southeast
+Alaska,2,AK,
+Arizona,4,AZ,Southwest
+Arkansas,5,AR,South
+California,6,CA,West
+Colorado,8,CO,Southwest
+Connecticut,9,CT,Northeast
+Delaware,10,DE,Northeast
+District of Columbia,11,DC,Northeast
+Florida,12,FL,Southeast
+Georgia,13,GA,Southeast
+Hawaii,15,HI,
+Idaho,16,ID,Northwest
+Illinois,17,IL,Ohio Valley
+Indiana,18,IN,Ohio Valley
+Iowa,19,IA,Upper Midwest
+Kansas,20,KS,South
+Kentucky,21,KY,Ohio Valley
+Louisiana,22,LA,South
+Maine,23,ME,Northeast
+Maryland,24,MD,Northeast
+Massachusetts,25,MA,Northeast
+Michigan,26,MI,Upper Midwest
+Minnesota,27,MN,Upper Midwest
+Mississippi,28,MS,South
+Missouri,29,MO,Ohio Valley
+Montana,30,MT,Northern Rockies and Plains
+Nebraska,31,NE,Northern Rockies and Plains
+Nevada,32,NV,West
+New Hampshire,33,NH,Northeast
+New Jersey,34,NJ,Northeast
+New Mexico,35,NM,Southwest
+New York,36,NY,Northeast
+North Carolina,37,NC,Southeast
+North Dakota,38,ND,Northern Rockies and Plains
+Ohio,39,OH,Ohio Valley
+Oklahoma,40,OK,South
+Oregon,41,OR,Northwest
+Pennsylvania,42,PA,Northeast
+Rhode Island,44,RI,Northeast
+South Carolina,45,SC,Southeast
+South Dakota,46,SD,Northern Rockies and Plains
+Tennessee,47,TN,Ohio Valley
+Texas,48,TX,South
+Utah,49,UT,Southwest
+Vermont,50,VT,Northeast
+Virginia,51,VA,Southeast
+Washington,53,WA,Northwest
+West Virginia,54,WV,Ohio Valley
+Wisconsin,55,WI,Upper Midwest
+Wyoming,56,WY,Northern Rockies and Plains
