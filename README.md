@@ -1,6 +1,6 @@
-# **Temperature and interpersonal and self-inflicted violence-related Medicaid hospital visits in the United States**
+# **Higher temperatures are associated with increased interpersonal and self inflicted violence-related Medicaid hospital visits in the United States**
 
-Robbie M Parks, Lauren Flynn, Zifan Gu, Danielle Braun, Ilan Cerna-Turoff, Cascade Tuholske, Francesca Dominici, Jutta Lindert, Marianthi-Anna Kioumourtzoglou. Communications Sustainability. 2025
+Robbie M Parks, Lauren Flynn, Zifan Gu, Danielle Braun, Ilan Cerna-Turoff, Cascade Tuholske, Francesca Dominici, Jutta Lindert, Marianthi-Anna Kioumourtzoglou. Communications Sustainability. 2026
 
 ## Project description
 
@@ -143,14 +143,8 @@ All figures for manuscript and supplement
 │   ├── model_output
 │   └── models
 ├── README.md
-├── reports
-│   ├── conference_abstract
-│   ├── presentation
-│   ├── project_initiation
-│   └── words
 ├── tables
 │   └── table1
-└── temperature_violence_medicaid_2022.Rproj
 ```
 
 ## Data Availability
