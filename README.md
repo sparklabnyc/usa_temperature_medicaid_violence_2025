@@ -1,4 +1,4 @@
-# **Temperature and interpersonal and self-inflicted violence-related Medicaid hospital visits in the United States**
+# **Higher temperatures are associated with increased interpersonal and self inflicted violence-related Medicaid hospital visits in the United States**
 
 Robbie M Parks, Lauren Flynn, Zifan Gu, Danielle Braun, Ilan Cerna-Turoff, Cascade Tuholske, Francesca Dominici, Jutta Lindert, Marianthi-Anna Kioumourtzoglou. Communications Sustainability. 2025
 
