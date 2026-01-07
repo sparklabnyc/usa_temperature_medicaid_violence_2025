@@ -1,0 +1,227 @@
+---
+title: "Figure 2 plot"
+output: html_document
+---
+# First step to load packages
+Confirm all packages are installed
+
+```{r include=FALSE}
+# load packages and file locations etc.
+rm(list=ls())
+project.folder = paste0(print(here::here()),'/')
+source(paste0(project.folder,'create_folder_structure.R'))
+source(paste0(functions.folder,'script_initiate.R'))
+```
+
+```{r include=FALSE}
+# Load packages
+library(dlnm)
+library(dplyr)
+library(forcats)
+library(ggplot2)
+library(lubridate)
+library(MetBrewer)
+library(splines)
+library(stringr)
+library(survival)
+library(tidyr)
+```
+
+# Load results
+```{r}
+cause.model.exploration.folder = paste0(model.exploration.folder,'All_together/')
+dat.results = read.csv(paste0(cause.model.exploration.folder,'overall_dlnm_results_freq_lag01.csv'))
+```
+
+# Tidy up for plotting purposes
+```{r}
+dat.results = dat.results %>%
+  filter(analysis!="0") %>%
+  mutate(group=case_when(
+          analysis == "main" ~ "All",
+          
+          analysis == "females" ~ "Sex",
+          analysis == "males" ~ "Sex",
+          
+          # analysis == "0" ~ "Age group (broad)",
+          # analysis == "65" ~ "Age group (broad)",
+          
+          analysis == "0_24" ~ "Age group",
+          analysis == "25_44" ~ "Age group",
+          analysis == "45_64" ~ "Age group",     
+          analysis == "65" ~ "Age group",
+
+          analysis == "females_0" ~ "Sex and age group (broad)",
+          analysis == "females_65" ~ "Sex and age group (broad)",
+          analysis == "males_0" ~ "Sex and age group (broad)",
+          analysis == "males_65" ~ "Sex and age group (broad)",
+          
+          analysis == "northeast" ~ "Climate\nregion",
+          analysis == "northern_rockies_and_plains" ~ "Climate\nregion",
+          analysis == "northwest" ~ "Climate\nregion",
+          analysis == "ohio_valley" ~ "Climate\nregion",
+          analysis == "south" ~ "Climate\nregion",
+          analysis == "southeast" ~ "Climate\nregion",
+          analysis == "southwest" ~ "Climate\nregion",
+          analysis == "upper_midwest" ~ "Climate\nregion",
+          analysis == "west" ~ "Climate\nregion",
+          
+          analysis == "poverty1" ~ "Poverty\nquintiles",
+          analysis == "poverty2" ~ "Poverty\nquintiles",
+          analysis == "poverty3" ~ "Poverty\nquintiles",
+          analysis == "poverty4" ~ "Poverty\nquintiles",
+          analysis == "poverty5" ~ "Poverty\nquintiles",
+          
+          analysis == "education1" ~ "Education\nquintiles",
+          analysis == "education2" ~ "Education\nquintiles",
+          analysis == "education3" ~ "Education\nquintiles",
+          analysis == "education4" ~ "Education\nquintiles",
+          analysis == "education5" ~ "Education\nquintiles",
+          
+          analysis == "nonwhite1" ~ "Non-white\nquintiles",
+          analysis == "nonwhite2" ~ "Non-white\nquintiles",
+          analysis == "nonwhite3" ~ "Non-white\nquintiles",
+          analysis == "nonwhite4" ~ "Non-white\nquintiles",
+          analysis == "nonwhite5" ~ "Non-white\nquintiles",
+          
+          analysis == "nonwhite1_poverty1" ~ "Race-poverty\ninteraction",
+          analysis == "nonwhite1_poverty5" ~ "Race-poverty\ninteraction",
+          analysis == "nonwhite5_poverty1" ~ "Race-poverty\ninteraction",
+          analysis == "nonwhite5_poverty5" ~ "Race-poverty\ninteraction",
+          
+          TRUE ~ NA_character_
+        )
+  ) %>%
+    mutate(analysis=case_when(
+          analysis == "main" ~ "All",
+          
+          analysis == "females" ~ "Females",
+          analysis == "males" ~ "Males",
+          
+          # analysis == "0" ~ "0-64 years",
+          # analysis == "65" ~ "65+ years",
+          
+          analysis == "0_24" ~ "0-24 years",
+          analysis == "25_44" ~ "25-44 years",
+          analysis == "45_64" ~ "45-64 years",     
+          analysis == "65" ~ "65+ years",
+
+          analysis == "females_0" ~ "Females 0-64 years",
+          analysis == "females_65" ~ "Females 65+ years",
+          analysis == "males_0" ~ "Males 0-64 years",
+          analysis == "males_65" ~ "Males 65+ years",
+          
+          analysis == "northeast" ~ "Northeast",
+          analysis == "northern_rockies_and_plains" ~ "Northern Rockies",
+          analysis == "northwest" ~ "Northwest",
+          analysis == "ohio_valley" ~ "Ohio Valley",
+          analysis == "south" ~ "South",
+          analysis == "southeast" ~ "Southeast",
+          analysis == "southwest" ~ "Southwest",
+          analysis == "upper_midwest" ~ "Upper Midwest",
+          analysis == "west" ~ "West",
+          
+          analysis == "poverty1" ~ "1 (lowest poverty)",
+          analysis == "poverty2" ~ "2",
+          analysis == "poverty3" ~ "3",
+          analysis == "poverty4" ~ "4",
+          analysis == "poverty5" ~ "5 (higest poverty)",
+          
+          analysis == "education1" ~ "1 (highest education)",
+          analysis == "education2" ~ "2",
+          analysis == "education3" ~ "3",
+          analysis == "education4" ~ "4",
+          analysis == "education5" ~ "5 (lowest education)",
+          
+          analysis == "nonwhite1" ~ "1 (lowest non-white)",
+          analysis == "nonwhite2" ~ "2",
+          analysis == "nonwhite3" ~ "3",
+          analysis == "nonwhite4" ~ "4",
+          analysis == "nonwhite5" ~ "5 (highest non-white)", 
+          
+          analysis == "nonwhite1_poverty1" ~ "Low non-white/low poverty",
+          analysis == "nonwhite1_poverty5" ~ "Low non-white/high poverty",
+          analysis == "nonwhite5_poverty1" ~ "High non-white/low poverty",
+          analysis == "nonwhite5_poverty5" ~ "High non-white/high poverty",
+          
+          TRUE ~ NA_character_
+        )
+  ) %>%  
+  mutate(exposure=case_when(
+          exposure == "tmean" ~ "Dry temperature",
+          exposure == "wbgtmax" ~ "Humid temperature",
+          TRUE ~ NA_character_
+        )
+  ) %>%  
+  mutate(cause=case_when(
+          cause == "All_violence" ~ "All violence",
+          cause == "assault" ~ "Interpersonal",
+          cause == "suicide" ~ "Self-inflicted",
+          TRUE ~ NA_character_
+        )
+  ) %>% 
+  mutate(group=fct_relevel(group, "All", "Sex", "Age group",
+                                   "Sex and age group (broad)", "Climate\nregion", 
+                                  "Poverty\nquintiles", "Education\nquintiles",
+                                   "Non-white\nquintiles")) %>%
+  filter(group!="Sex and age group (broad)") %>% 
+  mutate(cause=fct_relevel(cause, "All violence", "Interpersonal", "Self-inflicted"))
+
+```
+
+# Plot Figure 2
+```{r}
+p = ggplot(data=dat.results %>% filter(exposure_change==exposure_change_chosen)) +
+    geom_errorbar(aes(x=analysis,ymax=ul.est,ymin=ll.est,color=exposure),width=.5,size=0.5,position=position_dodge(0.7)) +
+    geom_point(aes(x=analysis,y=central.est,color=exposure),size=2,shape=16,position=position_dodge(0.7)) +
+    facet_grid(cause~group,scales="free", space ="free_x") +
+    geom_hline(yintercept=0,linetype='dotted') +
+    xlab("") + ylab('Cumulative percentage change in hospitalization rates\nfor 5°C increase') +
+    scale_y_continuous(labels=scales::percent_format(accuracy=1)) +
+    scale_colour_manual(values=colors.exposures) +
+    labs(colour="", shape="") +
+    theme_bw() + theme(text = element_text(size = 16),legend.text=element_text(size=12),
+    panel.grid.major = element_blank(),
+    axis.text.x = element_text(size=12,angle=90,vjust=0.5, hjust=1), axis.text.y = element_text(size=10),
+    plot.margin=grid::unit(c(0,0,0,0), "mm"),
+    plot.title = element_text(hjust = 0.5), panel.background = element_blank(),
+    panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
+    panel.border = element_rect(colour = "black"),strip.background = element_blank(),
+    legend.position = 'bottom',legend.justification='center',
+    legend.background = element_rect(fill="white", size=.5, linetype="dotted"))
+
+pdf(paste0(figure2.folder,'figure2.pdf'),paper='a4r',height=0,width=0)
+print(p)
+dev.off()
+
+p
+```
+
+# Plot Figure 2 option 2
+```{r}
+p2 = ggplot(data=dat.results %>% filter(exposure_change==exposure_change_chosen)) +
+    geom_errorbar(aes(x=analysis,ymax=ul.est,ymin=ll.est,color=exposure),width=.5,size=0.5,position=position_dodge(0.7)) +
+    geom_point(aes(x=analysis,y=central.est,color=exposure),size=2,shape=16,position=position_dodge(0.7)) +
+    facet_grid(group~cause,scales="free", space ="free_y") +
+    geom_hline(yintercept=0,linetype='dotted') +
+    xlab("") + ylab('Cumulative percentage change in hospitalization rates\nfor 5°C increase') +
+    scale_y_continuous(labels=scales::percent_format(accuracy=1)) +
+    scale_colour_manual(values=colors.exposures) +
+    labs(colour="", shape="") +
+    theme_bw() + theme(text = element_text(size = 16),legend.text=element_text(size=12),
+    panel.grid.major = element_blank(),
+    axis.text.x = element_text(size=12,angle=90,vjust=0.5, hjust=1), axis.text.y = element_text(size=10),
+    plot.margin=grid::unit(c(0,0,0,0), "mm"),
+    plot.title = element_text(hjust = 0.5), panel.background = element_blank(),
+    panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"),
+    panel.border = element_rect(colour = "black"),strip.background = element_blank(),
+    legend.position = 'bottom',legend.justification='center',
+    legend.background = element_rect(fill="white", size=.5, linetype="dotted")) + 
+    coord_flip()
+
+pdf(paste0(figure2.folder,'figure2_option2.pdf'),paper='a4',height=0,width=0)
+print(p2)
+dev.off()
+
+p2
+```

@@ -1,0 +1,150 @@
+print('Plotting models')
+
+if(exposure=='tmean'){xlabel="Temperature (C)"}
+if(exposure=='wbgtmax'){xlabel="WBGT (C)"}
+
+
+# plot cumulative results from all together model
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_main_freq',pdf_suffix),paper='a4r',height=0,width=0)
+result.temp = crosspred(cb.temp,mod.freq.dnlm,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='black', xlab = xlabel, ylab="Cumulative OR", main='Overall')
+dev.off()
+
+# plot cumulative results by sex
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_sex_freq',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(1,2))
+result.temp = crosspred(cb.temp.females,mod.freq.dnlm.females,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=colors.sex[2], xlab = xlabel, ylab="Cumulative OR", main='Females')
+result.temp = crosspred(cb.temp.males,mod.freq.dnlm.males,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=colors.sex[1], xlab = xlabel, ylab="Cumulative OR", main='Males')
+dev.off()
+
+# plot cumulative results by age
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_age_freq',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(1,2))
+result.temp = crosspred(cb.temp.0,mod.freq.dnlm.0,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=age.colours[1], xlab = xlabel, ylab="Cumulative OR", main='0-64 years')
+result.temp = crosspred(cb.temp.65,mod.freq.dnlm.65,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=age.colours[2], xlab = xlabel, ylab="Cumulative OR", main='65+ years')
+dev.off()
+
+# plot cumulative results by age by narrower classes
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_age_2_freq',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(2,2))
+result.temp = crosspred(cb.temp.0.24,mod.freq.dnlm.0.24,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=age.colours.10[1], xlab = xlabel, ylab="Cumulative OR", main='0-24 years')
+result.temp = crosspred(cb.temp.25.44,mod.freq.dnlm.25.44,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=age.colours.10[3], xlab = xlabel, ylab="Cumulative OR", main='25-44 years')
+result.temp = crosspred(cb.temp.45.64,mod.freq.dnlm.45.64,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=age.colours.10[9], xlab = xlabel, ylab="Cumulative OR", main='45-64 years')
+result.temp = crosspred(cb.temp.65,mod.freq.dnlm.65,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=age.colours.10[10], xlab = xlabel, ylab="Cumulative OR", main='65+ years')
+dev.off()
+
+# plot cumulative results by sex and age
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_sex_and_age_freq',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(2,2))
+result.temp = crosspred(cb.temp.females.0,mod.freq.dnlm.females.0,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=colors.sex[2], xlab = xlabel, ylab="Cumulative OR", main='Females: 0-64 years')
+result.temp = crosspred(cb.temp.females.65,mod.freq.dnlm.females.65,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=colors.sex[2], xlab = xlabel, ylab="Cumulative OR", main='Females: 65+ years')
+result.temp = crosspred(cb.temp.males.0,mod.freq.dnlm.males.0,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=colors.sex[1], xlab = xlabel, ylab="Cumulative OR", main='Males: 0-64 years')
+result.temp = crosspred(cb.temp.males.65,mod.freq.dnlm.males.65,cen=temp_mean,by=1)
+plot(result.temp, "overall", col=colors.sex[1], xlab = xlabel, ylab="Cumulative OR", main='Males: 65+ years')
+dev.off()
+
+# plot cumulative results by climate region
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_climate_region',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(3,3))
+result.temp = crosspred(cb.temp.northeast,mod.freq.dnlm.northeast,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Northeast')
+result.temp = crosspred(cb.temp.northern.rockies.and.plains,mod.freq.dnlm.northern.rockies.and.plains,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Northern Rockies and Plains')
+result.temp = crosspred(cb.temp.northwest,mod.freq.dnlm.northwest,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Northwest')
+result.temp = crosspred(cb.temp.ohio.valley,mod.freq.dnlm.ohio.valley,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Ohio Valley')
+result.temp = crosspred(cb.temp.south,mod.freq.dnlm.south,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='South')
+result.temp = crosspred(cb.temp.southeast,mod.freq.dnlm.southeast,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Southeast')
+result.temp = crosspred(cb.temp.southwest,mod.freq.dnlm.southwest,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Southwest')
+result.temp = crosspred(cb.temp.upper.midwest,mod.freq.dnlm.upper.midwest,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Upper Midwest')
+result.temp = crosspred(cb.temp.west,mod.freq.dnlm.west,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='West')
+dev.off()
+
+# plot cumulative results by SES
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_poverty',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(2,3))
+result.temp = crosspred(cb.temp.poverty.1,mod.freq.dnlm.poverty.1,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='1 (richest)')
+result.temp = crosspred(cb.temp.poverty.2,mod.freq.dnlm.poverty.2,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='2')
+result.temp = crosspred(cb.temp.poverty.3,mod.freq.dnlm.poverty.3,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='3')
+result.temp = crosspred(cb.temp.poverty.4,mod.freq.dnlm.poverty.4,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='4')
+result.temp = crosspred(cb.temp.poverty.5,mod.freq.dnlm.poverty.5,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='5 (poorest)')
+dev.off()
+
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_education',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(2,3))
+result.temp = crosspred(cb.temp.education.1,mod.freq.dnlm.education.1,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='1 (least educated)')
+result.temp = crosspred(cb.temp.education.2,mod.freq.dnlm.education.2,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='2')
+result.temp = crosspred(cb.temp.education.3,mod.freq.dnlm.education.3,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='3')
+result.temp = crosspred(cb.temp.education.4,mod.freq.dnlm.education.4,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='4')
+result.temp = crosspred(cb.temp.education.5,mod.freq.dnlm.education.5,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='5 (most educated)')
+dev.off()
+
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_nonwhite',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(2,3))
+result.temp = crosspred(cb.temp.nonwhite.1,mod.freq.dnlm.nonwhite.1,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='1 (least non-white)')
+result.temp = crosspred(cb.temp.nonwhite.2,mod.freq.dnlm.nonwhite.2,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='2')
+result.temp = crosspred(cb.temp.nonwhite.3,mod.freq.dnlm.nonwhite.3,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='3')
+result.temp = crosspred(cb.temp.nonwhite.4,mod.freq.dnlm.nonwhite.4,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='4')
+result.temp = crosspred(cb.temp.nonwhite.5,mod.freq.dnlm.nonwhite.5,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='5 (most non-white)')
+dev.off()
+
+# plot by interaction between non-white and poverty for most non-white and least non-white
+pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_nonwhite_and_poverty_interaction',pdf_suffix),paper='a4r',height=0,width=0)
+par(mfrow=c(2,2))
+result.temp = crosspred(cb.temp.nonwhite.1.poverty.1,mod.freq.dnlm.nonwhite.1.poverty.1,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Least non-white and richest')
+result.temp = crosspred(cb.temp.nonwhite.1.poverty.5,mod.freq.dnlm.nonwhite.1.poverty.5,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Least non-white and poorest')
+
+result.temp = crosspred(cb.temp.nonwhite.5.poverty.1,mod.freq.dnlm.nonwhite.5.poverty.1,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Most non-white and richest')
+result.temp = crosspred(cb.temp.nonwhite.5.poverty.5,mod.freq.dnlm.nonwhite.5.poverty.5,cen=temp_mean,by=1)
+plot(result.temp, "overall", col='blue', xlab = xlabel, ylab="Cumulative OR", main='Most non-white and poorest')
+dev.off()
+
+# plot cumulative results from relative humidity sensitivity
+if(exposure=='tmean'){
+  pdf(paste0(cause.model.exploration.folder,cause,'_',exposure,'_dlnm_results_rh_sensitivity_freq',pdf_suffix),paper='a4r',height=0,width=0)
+  par(mfrow=c(1,3))
+  result.temp = crosspred(cb.temp,mod.freq.dnlm,cen=temp_mean,by=1)
+  plot(result.temp, "overall", col='black', xlab = xlabel, ylab="Cumulative OR", main='Overall')
+  result.temp = crosspred(cb.temp,mod.freq.dnlm.rh,cen=temp_mean,by=1)
+  plot(result.temp, "overall", col='black', xlab = xlabel, ylab="Cumulative OR",
+       main='Including RH')
+  result.rh = crosspred(cb.rh,mod.freq.dnlm.rh,cen=0.8)
+  plot(result.rh, "overall", col=2, xlab = "Relative Humidity", ylab="Cumulative OR",
+       main='Relative Humidity')
+  dev.off()
+}
