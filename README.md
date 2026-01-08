@@ -6,7 +6,7 @@ Robbie M Parks, Lauren Flynn, Zifan Gu, Danielle Braun, Ilan Cerna-Turoff, Casca
 
 This dataset and code is used for the paper
 
-[[LINK](https://www.nature.com/articles/s44458-025-00001-x)](https://www.nature.com/articles/s44458-025-00001-x)
+[https://www.nature.com/articles/s44458-025-00001-x](https://www.nature.com/articles/s44458-025-00001-x)
 
 ## 1. Data
 
